@@ -28,7 +28,7 @@ const Auth = ({ setAuthenticated }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await fetch('http://localhost:8000/api/v1/users/verify-otp', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/users/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: formData.email, token: otp })
@@ -71,7 +71,7 @@ const Auth = ({ setAuthenticated }) => {
     try {
       if (!isLogin) {
         // Register User via Python Backend
-        const res = await fetch('http://localhost:8000/api/v1/users/', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/users/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -94,7 +94,7 @@ const Auth = ({ setAuthenticated }) => {
         formData.role = data.role;
         
         // Trigger 2FA Email OTP using custom Python Backend
-        const otpRes = await fetch('http://localhost:8000/api/v1/users/send-otp', {
+        const otpRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/users/send-otp`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: formData.email })
@@ -111,7 +111,7 @@ const Auth = ({ setAuthenticated }) => {
         
       } else {
         // Login Logic via Python Backend
-        const res = await fetch('http://localhost:8000/api/v1/users/login', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/users/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -132,7 +132,7 @@ const Auth = ({ setAuthenticated }) => {
         formData.role = data.role;
         
         // Trigger 2FA Email OTP using custom Python Backend
-        const otpRes = await fetch('http://localhost:8000/api/v1/users/send-otp', {
+        const otpRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/users/send-otp`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: formData.email })

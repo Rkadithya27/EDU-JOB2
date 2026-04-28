@@ -34,7 +34,7 @@ const ChatBot = () => {
       setIsTyping(true);
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/v1/voice/ask', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/voice/ask`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text })
@@ -88,7 +88,7 @@ const ChatBot = () => {
     setIsTyping(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/v1/voice/ask', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/voice/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: userMessage })
@@ -139,6 +139,32 @@ const ChatBot = () => {
               overflow: 'hidden'
             }}
           >
+            {/* Close Button Top Right */}
+            <button
+              onClick={() => setIsOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                background: 'rgba(255,255,255,0.1)',
+                border: 'none',
+                borderRadius: '50%',
+                width: '32px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: 'white',
+                zIndex: 20,
+                transition: 'background 0.2s'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.8)'}
+              onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+            >
+              <X size={16} />
+            </button>
+
             {/* AI Buddy Badge */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', zIndex: 10 }}>
               <div style={{ background: '#a3e635', color: '#050505', padding: '4px 12px', borderRadius: '20px', fontWeight: 600, fontSize: '13px' }}>

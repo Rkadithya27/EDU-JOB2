@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 
 const SiriWaveform = () => (
   <div style={{ position: 'relative', width: '100%', maxWidth: '250px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -11,6 +12,7 @@ const SiriWaveform = () => (
 );
 
 const VoiceAssistant = ({ userGuidance }) => {
+  const [isVisible, setIsVisible] = useState(true);
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [response, setResponse] = useState('');
@@ -44,7 +46,7 @@ const VoiceAssistant = ({ userGuidance }) => {
       
       // Send locally generated text to backend
       try {
-        const res = await fetch('http://127.0.0.1:8000/api/v1/voice/ask', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/voice/ask`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text, user_guidance: userGuidance })
@@ -84,8 +86,34 @@ const VoiceAssistant = ({ userGuidance }) => {
     recognition.start();
   };
 
+  if (!isVisible) return null;
+
   return (
-    <div className="glass-panel" style={{ marginTop: '24px', background: 'linear-gradient(145deg, rgba(20,20,31,0.8), rgba(99,102,241,0.1))' }}>
+    <div className="glass-panel" style={{ marginTop: '24px', background: 'linear-gradient(145deg, rgba(20,20,31,0.8), rgba(99,102,241,0.1))', position: 'relative' }}>
+      <button 
+        onClick={() => setIsVisible(false)}
+        style={{
+          position: 'absolute',
+          top: '12px',
+          right: '12px',
+          background: 'rgba(255,255,255,0.05)',
+          border: 'none',
+          borderRadius: '50%',
+          width: '28px',
+          height: '28px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          color: 'var(--text-secondary)',
+          transition: 'all 0.2s'
+        }}
+        onMouseOver={(e) => { e.currentTarget.style.color = 'white'; e.currentTarget.style.background = 'rgba(239, 68, 68, 0.8)'; }}
+        onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+      >
+        <X size={14} />
+      </button>
+
       <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         🎙️ AI Voice Assistant
         {isListening && <span className="listening-indicator"></span>}
