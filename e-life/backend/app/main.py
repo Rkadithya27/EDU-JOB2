@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# CORRECTED IMPORTS: Removed 'app.' prefix because folders are in the root
-from core.config import settings
-from api.api import api_router
+# CORRECTED IMPORTS: Re-added 'app.' prefix because Render runs from the backend directory
+from app.core.config import settings
+from app.api.api import api_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
