@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from app.core.config import settings
-from app.api.api import api_router
+# Change these lines in main.py
+from core.config import settings
+from api.api import api_router
 # SQLAlchemy is completely removed in favor of direct MongoDB PyMongo connection
 
 from fastapi.middleware.cors import CORSMiddleware
